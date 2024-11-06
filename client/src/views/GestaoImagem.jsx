@@ -94,8 +94,7 @@ function GestaoImagem() {
                     <input 
                         className='form-control' 
                         type="file" 
-                        value={imagem} 
-                        onChange={e=>(setImagem(e.target.value))}
+                        onChange={e=>(setImagem(e.target.files[0]))}
                         name="" id="" />
                     <button className='btn btn-success mt-2' onClick={cadastrarImagem}>Cadastrar</button>
                 </div>
