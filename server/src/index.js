@@ -3,6 +3,8 @@ import fileUpload from 'express-fileupload';
 import cors from 'cors';
 
 import {criarImagem, deletandoImagem, editarImagem, downloadImagem, mostrarImagens, mostrarUmaImagem} from './controllers/ImagemController.js';
+import { criarUsuario, logarUsuario, mostrarUmUsuario, mostrarUsuario } from './controllers/UsuarioController.js';
+
 
 const app = express();
 const porta = 5000;
@@ -22,6 +24,14 @@ app.get('/imagem',mostrarImagens);
 app.get('/imagem/:id_imagem',mostrarUmaImagem);
 app.put('/imagem/:id_imagem',editarImagem);
 app.delete('/imagem/:id_imagem',deletandoImagem);
+
+//CRUD usuario
+app.post('/usuario',criarUsuario);
+app.get('/usuario',mostrarUsuario);
+app.get('/usuario/:id_usuario',mostrarUmUsuario);
+
+//Efetuar login
+app.post('/login',logarUsuario);
 
 app.listen(porta, ()=>{
     console.log(`API Rodando na porta ${porta}`)
