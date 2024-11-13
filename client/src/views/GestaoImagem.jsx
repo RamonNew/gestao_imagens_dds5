@@ -31,12 +31,12 @@ function GestaoImagem() {
     async function getNomeFuncao(id_usuario){
         console.log(`http://localhost:5000/usuario/${id_usuario}`);
         try {
-            const [resposta] = await fetch(`http://localhost:5000/usuario/${id_usuario}`);
+            const resposta = await fetch(`http://localhost:5000/usuario/${id_usuario}`);
             const dados = await  resposta.json();
             if(dados){
                 console.log(dados);
-                // setLogin(dados.login);
-                // setFuncao(dados.funcao);
+                setLogin(dados.login);
+                setFuncao(dados.funcao);
             }
         } catch (error) {
             console.log(error);
@@ -103,6 +103,10 @@ function GestaoImagem() {
         }
     }
 
+    function logout(){
+        localStorage.removeItem('id_usuario');
+        navigate('/login');
+    }
     return (
         <>
             <div>
@@ -112,11 +116,13 @@ function GestaoImagem() {
                     <ul>
                         <li>Inicio</li>
                     </ul>
+                    <button className='btn btn-danger'onClick={logout}>Logout</button>
                 </nav>
             </div>
             <div className='container'>
                 <h1 className='text-center'>Gestão Imagens</h1>
                 <h2>{`Bem vindo ${login}`}</h2>
+                <h3>{funcao === 'adm' && 'Voce é administrador!!!'}</h3>
                 <div>
                     <h2>Cadastrar imagem</h2>
                     <label htmlFor="">Descrição</label>
