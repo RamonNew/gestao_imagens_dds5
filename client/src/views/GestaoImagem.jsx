@@ -1,13 +1,47 @@
 import React, { useEffect, useState } from 'react';
+import {useNavigate} from 'react-router-dom';
 
 function GestaoImagem() {
     const [imagens, setImagens] = useState([]);
     const [imagem, setImagem] = useState(null);
     const [descricao, setDescricao] = useState('');
+    const [idUsuario,setIdUsuario] = useState('');
+    const navigate = useNavigate();
+    const [login, setLogin] = useState('');
+    const [funcao,setFuncao] = useState('');
 
     useEffect(() => {
-        carregarImagens()
+        if(idUsuario === ''){
+            try {
+                const id_usuario = localStorage.getItem('id_usuario');
+                if(!id_usuario){
+                    alert('Efetue Login')
+                    navigate('/login');
+                }else{
+                    setIdUsuario(id_usuario);
+                    getNomeFuncao(id_usuario);
+                }
+            } catch (error) {
+                console.log('')
+            }
+        }
+        carregarImagens();
     }, []);
+
+    async function getNomeFuncao(id_usuario){
+        console.log(`http://localhost:5000/usuario/${id_usuario}`);
+        try {
+            const [resposta] = await fetch(`http://localhost:5000/usuario/${id_usuario}`);
+            const dados = await  resposta.json();
+            if(dados){
+                console.log(dados);
+                // setLogin(dados.login);
+                // setFuncao(dados.funcao);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     async function cadastrarImagem() {
         const formData = new FormData();
@@ -82,6 +116,7 @@ function GestaoImagem() {
             </div>
             <div className='container'>
                 <h1 className='text-center'>Gestão Imagens</h1>
+                <h2>{`Bem vindo ${login}`}</h2>
                 <div>
                     <h2>Cadastrar imagem</h2>
                     <label htmlFor="">Descrição</label>

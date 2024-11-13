@@ -15,6 +15,7 @@ export async function createUsuario(usuario) {
 
     try {
        const [retorno] = await conexao.query(sql,params);
+       console.log(retorno.insertId);
        return [201, {message:'Usuário Cadastrado'}]
     } catch (error) {
         console.log(error);

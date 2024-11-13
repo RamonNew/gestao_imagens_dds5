@@ -6,7 +6,6 @@ function TelaLogin() {
 
     async function efetuarLogin() {
         const dadosLogin = { login, senha };
-
         try {
             const resposta = await fetch('http://localhost:5000/login', {
                 method: 'POST',
